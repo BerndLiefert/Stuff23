@@ -91,14 +91,14 @@
         }
 
         .parallax .slide:first-child {
-            background-color: #e74c3c;
+            background-color: #48c9b0;
             transform: translateZ(-20px) scale(4);
             top: 0;
             z-index: 2;
         }
 
         .parallax .slide:nth-child(2) {
-            background-color: #48c9b0;
+            background-color: #e74c3c;
             transform: translateZ(-5px) scale(1.5);
             top: 150%;
             width: calc(100% + 4px);
@@ -109,6 +109,11 @@
             background-color: orange;
             top: 200%;
             z-index: 0;
+        }
+
+        .parallax-example {
+            position: absolute;
+            width: 200px;
         }
 
         .fade {
@@ -132,7 +137,6 @@
 
         #links {
             position: absolute;
-            bottom: 10px;
         }
 
         #links a {
@@ -182,6 +186,7 @@
                     </div>
                 </div>
             </div>
+            <img class="parallax-example" src="./img/parallax.gif">
         </section>
         <section>
             <h1>Snap + Fade + Parallax</h1>
@@ -289,9 +294,15 @@
         }
     });
 
+    onhashchange = function () {
+        app.show(slides.filter((slide) => {
+            return slide.id === location.hash.replace("#", "").replace("_", "");
+        })[0].id);
+    };
+
     let zIndex = 0;
     window.onhashchange = function (event) {
-        document.querySelector(location.has).style.zIndex = zIndex++;
+        document.querySelector(location.hash).style.zIndex = zIndex++;
     };
 </script>
 
