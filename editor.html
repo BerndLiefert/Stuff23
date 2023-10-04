@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSS Editor</title>
+    <meta charset="utf-8">
+
+    <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --red: #E74C3C;
+            --white: #F2F3F4;
+            --black: #212f3c;
+            --gray: #d6dbdf;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        ::selection {
+            color: var(--red);
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 640px;
+            height: 480px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 640px;
+            height: 480px;
+            color: var(--white);
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
+
+        .slide:nth-child(even) {
+            background-color: var(--black);
+        }
+
+        .slide:nth-child(odd) {
+            background-color: var(--red);
+        }
+
+        .slide:nth-child(2) {
+            /*height: 800px;*/
+        }
+
+        #sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 300px;
+            background: var(--gray);
+        }
+
+        #sidebar label {
+            display: inline-block;
+            width: 120px;
+        }
+
+        #sidebar h2,
+        #sidebar p {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body onload="init()">
+    <main>
+        <section id="sidebar">
+            <h2>Settings</h2>
+            <p>
+                <label for="scrollSnapType">Scroll Snap Type</label>
+                <select id="scrollSnapType">
+                    <option selected value="y mandatory">y mandatory</option>
+                    <option value="x">x</option>
+                </select>
+            </p>
+            <p>
+                <label for="scrollSnapAlign">Scroll Snap Align</label>
+                <select id="scrollSnapAlign">
+                    <option value="start">start</option>
+                    <option selected value="center">center</option>
+                    <option value="end">end</option>
+                </select>
+            </p>
+            <p>
+                <textarea id="cssInput">
+/* Place CSS here */
+                </textarea>
+            </p>
+        </section>
+        <div class="wrapper">
+            <div class="slide">
+                <h2>hello world!</h2>
+            </div>
+            <div class="slide">
+                <h2>fubar!</h2>
+            </div>
+            <div class="slide">
+                <h2>answer is cat!</h2>
+            </div>
+            <div class="slide">
+                <h2>lorem ipsum!</h2>
+            </div>
+        </div>
+        <script>
+            "use strict";
+
+            let wrapper = document.querySelector(".wrapper");
+
+            function init() {
+                let wrapperStyle = getComputedStyle(wrapper);
+                document.querySelector("#scrollSnapType").value = wrapperStyle.scrollSnapType;
+
+                let slideStyle = getComputedStyle(document.querySelector(".slide"));
+                document.querySelector("#scrollSnapAlign").value = slideStyle.scrollSnapAlign;
+
+                let css = (localStorage.css) ? JSON.parse(localStorage.css) : "";
+                document.querySelector("#cssInput").innerHTML = css;
+            }
+
+            document.querySelector("#scrollSnapType").addEventListener("change", (event) => {
+                if (event.target.value.toLowerCase().indexOf("x") !== -1) {
+                    wrapper.style.scrollSnapType = event.target.value;
+                    wrapper.style.flexDirection = "row";
+                    wrapper.style.overflow = "auto hidden";
+                    return;
+                }
+                wrapper.style.scrollSnapType = event.target.value;
+                wrapper.style.flexDirection = "column";
+                wrapper.style.overflow = "hidden auto";
+            });
+
+            document.querySelector("#scrollSnapAlign").addEventListener("change", (event) => {
+                let slides = document.querySelectorAll(".slide");
+                slides.forEach((element) => {
+                    element.style.scrollSnapAlign = event.target.value;
+                })
+            });
+
+            let style = document.createElement("style");
+            document.body.appendChild(style);
+
+            document.querySelector("#cssInput").addEventListener("keyup", (event) => {
+                //let styleElement = document.querySelector("style");
+                style.innerHTML = event.target.value;
+
+                //save to local storage
+                localStorage.css = JSON.stringify(event.target.value);
+            });
+        </script>
+    </main>
+</body>
+
+</html>
