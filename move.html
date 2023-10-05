@@ -82,34 +82,18 @@
             }
         });
 
-        let options = {
-            root: document.querySelector("section:nth-child(2)"),
-            rootMargin: "0px",
-            threshold: 1.0,
-        };
-
-        let callback = (entries, observer) => {
-            entries.forEach((entry) => {
-                // Each entry describes an intersection change for one observed
-                // target element:
-                //   entry.boundingClientRect
-                //   entry.intersectionRatio
-                //   entry.intersectionRect
-                //   entry.isIntersecting
-                //   entry.rootBounds
-                //   entry.target
-                //   entry.time
-            });
-        };
-
-        let observer = new IntersectionObserver(function (entries, observer) {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    alert("yo!");
-                }
-
+        let start = 2;
+        const section = document.querySelector(`section:nth-child(${start})`);
+        const options = {};
+        const observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(entry => {
+                //console.log(entry.target);
+                elementOne = entry.target;
+                elementTwo = document.querySelector(`section:nth-child(${++start})`);
             });
         }, options);
+
+        observer.observe(section);
 
 
     </script>
