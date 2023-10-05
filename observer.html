@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Intersection Observer Example</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 200vh;
+            height: 200dvh;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(69, 135, 12);
+            padding: 10px;
+        }
+
+        section {
+            padding: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+            border: 8px dashed black;
+            background-color: rgb(125, 213, 2);
+        }
+
+        h2,
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section>
+            <h1>Intersection Observer</h1>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo saepe reiciendis eos aliquid ipsam
+                illum velit ratione quidem tempore voluptatibus placeat id modi, aut, distinctio, odio ad tempora
+                veritatis totam!
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore autem, ipsam facere enim dolor molestiae
+                iusto similique hic nesciunt animi ipsum ducimus beatae sapiente repellendus libero provident ad sed
+                tempore!
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore autem, ipsam facere enim dolor molestiae
+                iusto similique hic nesciunt animi ipsum ducimus beatae sapiente repellendus libero provident ad sed
+                tempore!
+            </p>
+        </section>
+    </main>
+    <script>
+        "use strict";
+
+        const section = document.querySelector("section");
+        const options = {};
+        const observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(entry => {
+                console.log(entry.target);
+            });
+        }, options);
+
+        observer.observe(section);
+
+    </script>
+</body>
+
+</html>

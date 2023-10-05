@@ -30,11 +30,11 @@
             align-items: center;
         }
 
-        #one {
+        section:nth-child(odd) {
             background: red;
         }
 
-        #two {
+        section:nth-child(even) {
             transform: translateY(0);
             background: black;
         }
@@ -43,19 +43,25 @@
 
 <body>
     <main>
-        <section id="one">
+        <section>
             <h2>one</h2>
         </section>
-        <section id="two">
+        <section>
+            <h2>two</h2>
+        </section>
+        <section>
+            <h2>one</h2>
+        </section>
+        <section>
             <h2>two</h2>
         </section>
     </main>
     <script>
         "use strict";
-        let elementOne = document.querySelector("#one");
-        let elementTwo = document.querySelector("#two");
-        let y = 0;
-        let opacity = 1;
+        var elementOne = document.querySelector("section:first-child");
+        var elementTwo = document.querySelector("section:nth-child(2)");
+        var y = 0;
+        var opacity = 1;
 
         document.addEventListener("wheel", (event) => {
             if (event.deltaY > 0) {
@@ -75,6 +81,37 @@
 
             }
         });
+
+        let options = {
+            root: document.querySelector("section:nth-child(2)"),
+            rootMargin: "0px",
+            threshold: 1.0,
+        };
+
+        let callback = (entries, observer) => {
+            entries.forEach((entry) => {
+                // Each entry describes an intersection change for one observed
+                // target element:
+                //   entry.boundingClientRect
+                //   entry.intersectionRatio
+                //   entry.intersectionRect
+                //   entry.isIntersecting
+                //   entry.rootBounds
+                //   entry.target
+                //   entry.time
+            });
+        };
+
+        let observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    alert("yo!");
+                }
+
+            });
+        }, options);
+
+
     </script>
 </body>
 

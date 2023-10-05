@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSS Position Example</title>
+    <meta charset="utf-8">
+
+    <style>
+        :root {
+            --blue: #2489db;
+            --red: #E74C3C;
+            --pink: #f02fb6;
+            --green: #65e013;
+        }
+
+        * {
+            padding: 10px;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        ::selection {
+            color: var(--red);
+        }
+
+        body {
+            height: 200vh;
+            height: 200dvh;
+        }
+
+        .red {
+            background-color: var(--red);
+        }
+
+        .green {
+            background-color: var(--green);
+        }
+
+        .pink {
+            background-color: var(--pink);
+        }
+
+        .blue {
+            background-color: var(--blue);
+        }
+
+        .parent {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .child-one {
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="parent blue">
+        <h1>Parent</h1>
+        <div class="child-one item green">
+            <h2>One</h2>
+        </div>
+        <div class="child-two item red">
+            <h2>Two</h2>
+        </div>
+        <div class="child-three item pink">
+            <h2>Three</h2>
+        </div>
+    </main>
+</body>
+
+</html>
