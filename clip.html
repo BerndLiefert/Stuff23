@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Transform Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+
+            overflow-x: scroll;
+            overflow-y: auto;
+        }
+
+        section {
+            background: lime;
+            padding: 10px;
+        }
+
+        h1,
+        p {
+            margin: 10px 0;
+        }
+
+        .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: .6;
+            z-index: 1;
+            background-color: black;
+            clip-path: polygon(40px 40px, 40px 100px, 100px, 100px, 100px 40px, 40px 40px);
+        }
+
+        .window {
+            position: absolute;
+            top: calc(50vh - 200px);
+            left: calc(50vw - 300px);
+            border: 4px dashed black;
+            width: 600px;
+            height: 400px;
+            z-index: 2;
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="mask">
+
+        </div>
+        <div class="window">
+
+        </div>
+        <section>
+            <h1>Lorem ipsum</h1>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi reprehenderit dicta
+                pariatur, inventore molestiae quas assumenda fugit animi commodi, excepturi in libero? Sequi assumenda
+                aspernatur voluptatem impedit vero?
+            </p>
+        </section>
+    </main>
+    <script>
+        "use strict";
+        var elementOne = document.querySelector("section:first-child");
+        var elementTwo = document.querySelector("section:nth-child(2)");
+        var y = 0;
+        var opacity = 1;
+
+        document.addEventListener("wheel", (event) => {
+            if (event.deltaY > 0) {
+                elementOne.style.setProperty("transform", `translateY(${y / 2}px)`);
+                elementOne.style.setProperty("opacity", opacity);
+                opacity -= 0.02;
+
+                elementTwo.style.setProperty("transform", `translateY(${y}px)`);
+                y -= 10;
+            } else {
+                elementOne.style.setProperty("transform", `translateY(${y / 2}px)`);
+                elementOne.style.setProperty("opacity", opacity);
+                opacity += 0.02;
+
+                elementTwo.style.setProperty("transform", `translateY(${y}px)`);
+                y += 10;
+
+            }
+        });
+
+        let start = 2;
+        const section = document.querySelector(`section:nth-child(${start})`);
+        const options = {};
+        const observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(entry => {
+                //console.log(entry.target);
+                elementOne = entry.target;
+                elementTwo = document.querySelector(`section:nth-child(${++start})`);
+            });
+        }, options);
+
+        observer.observe(section);
+
+
+    </script>
+</body>
+
+</html>
