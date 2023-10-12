@@ -24,7 +24,7 @@
         }
 
         main {
-            height: 300vh;
+            height: 400vh;
             width: 100vw;
             position: relative;
         }
@@ -64,6 +64,10 @@
         #cat {
             top: 200vh;
         }
+
+        #lorem {
+            top: 300vh;
+        }
     </style>
 </head>
 
@@ -78,6 +82,9 @@
         <section id="cat">
             <h2>answer is cat</h2>
         </section>
+        <section id="lorem">
+            <h2>lorem ipsum</h2>
+        </section>
     </main>
     <script>
         "use strict";
@@ -89,8 +96,6 @@
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     index = sections.indexOf(entry.target);
-                } else {
-                    entry.target.style.setProperty("opacity", 1);
                 }
             });
         }, {
@@ -107,22 +112,27 @@
             debug.innerHTML = `Window ScrollY: ${Math.floor(window.scrollY)} px / 
             Section Top: ${slide.offsetTop} px`;
 
-            if (window.scrollY >= slide.offsetTop) {
-                //Mapping um einen Wert zwischen 0 und 1 zu bekommen
-                //let opacity = 1 / window.scrollY * 100;
-
+            if (window.scrollY > slide.offsetTop) {
                 let opacity = window.scrollY.map(
                     0,
-                    //index + 1: Anzahl der verbleibenden Sides?
-                    document.body.offsetHeight - (sections.length - index - 1) * slide.offsetHeight,
+                    //Anzahl der verbleibenden Sides?
+                    document.body.offsetHeight -
+                    (sections.length - index - 1) * slide.offsetHeight,
                     1,
                     0
                 );
 
+                if (index > 0) {
+                    opacity = parseFloat(opacity) + 0.5;
+                }
+
                 //letzten Slide ignorieren
-                if (index < sections.length - 2) {
+                if (index < sections.length - 1) {
                     slide.style.setProperty("opacity", opacity);
-                    //slide.style.transform = `translateY(${Math.floor(window.scrollY / 2)}px)`;
+                    slide.style.transform = `translateY(${Math.floor(
+                        (window.scrollY - slide.offsetTop) / 2)}px)`;
+                } else {
+                    slide.style.opacity = 1;
                 }
 
             }

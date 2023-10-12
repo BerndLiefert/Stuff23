@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            --black: #1c2833;
+            --white: #f8f9f9;
+            --red: #e74c3c;
+            --gray: #d6dbdf;
+            --dark: #212f3c;
+            --yellowgreen: #DAF7A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        button {
+            border: none;
+            background: var(--yellowgreen);
+            width: 200px;
+            height: 60px;
+            position: relative;
+        }
+
+        button,
+        canvas {
+            border-radius: 30px;
+        }
+
+        button label {
+            position: absolute;
+            display: inline-flex;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 60px;
+            justify-content: center;
+            align-items: center;
+            color: #212f3c;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <p><button class="animated-button"><label>hover me!</label><canvas width="200" height="60"></button></p>
+    </main>
+    <script>
+        "use strict";
+
+        class AnimatedButton {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.context = canvas.getContext("2d");
+                this.counter = 0;
+            }
+
+            animate(color) {
+                this.counter++;
+                this.context.fillStyle = color;
+
+                /* Geschwindigkeit der Animation */
+                if (this.counter % 6 == 0) {
+
+                    this.context.beginPath();
+                    this.context.arc(
+                        Math.floor(Math.random() * this.canvas.width),
+                        Math.floor(Math.random() * this.canvas.height),
+                        Math.floor(Math.random() * 20),
+                        0,
+                        Math.PI * 2,
+                        false);
+                    this.context.fill();
+
+                    this.counter = 0;
+                }
+
+                requestAnimationFrame(this.animate.bind(this));
+            }
+        }
+
+        let animatedButton = new AnimatedButton(document.querySelector(".animated-button > canvas"));
+        document.querySelector(".animated-button").addEventListener("mouseover", (event) => {
+            animatedButton.animate("#f8f9f9");
+        });
+
+        document.querySelector(".animated-button").addEventListener("mouseout", (event) => {
+            animatedButton.animate("#DAF7A6");
+        });
+
+        document.querySelector(".animated-button").addEventListener("click", (event) => {
+            console.log(event);
+        });
+
+    </script>
+</body>
+
+</html>
