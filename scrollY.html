@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            --white: #e0e0e0;
+            --red: #cb2727;
+            --black: #272832;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            overflow: hidden auto;
+        }
+
+        main {
+            height: 300vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        section {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: var(--white);
+
+            transition: opacity 0.2s;
+        }
+
+        section:nth-child(odd) {
+            background-color: var(--red);
+        }
+
+        section:nth-child(even) {
+            background-color: var(--black);
+        }
+
+
+        /* set top with php */
+        #hello {
+            top: 0;
+        }
+
+        #fubar {
+            top: 100vh;
+        }
+
+        #cat {
+            top: 200vh;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section id="hello">
+            <h2>hello world</h2>
+        </section>
+        <section id="fubar">
+            <h2>fubar</h2>
+        </section>
+        <section id="cat">
+            <h2>answer is cat</h2>
+        </section>
+    </main>
+    <script>
+        "use strict";
+
+        let sections = Array.from(document.querySelectorAll("section"));
+        var index = 0;
+
+        let observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    index = sections.indexOf(entry.target);
+                } else {
+                    entry.target.style.setProperty("opacity", 1);
+                }
+            });
+        }, {
+            threshold: 0.9
+        });
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+
+        document.addEventListener("scroll", (event) => {
+            let slide = sections[index];
+            let debug = document.querySelector("#debug");
+            debug.innerHTML = `Window ScrollY: ${Math.floor(window.scrollY)} px / 
+            Section Top: ${slide.offsetTop} px`;
+
+            if (window.scrollY >= slide.offsetTop) {
+                //Mapping um einen Wert zwischen 0 und 1 zu bekommen
+                let opacity = 1 / window.scrollY * 100;
+                console.log({ opacity });
+
+                slide.style.setProperty("opacity", opacity.toFixed(1));
+                slide.style.transform = `translateY(${Math.floor(window.scrollY / 2)}px)`;
+            }
+
+        });
+
+        let debug = document.createElement("div");
+        debug.id = "debug";
+
+        let options = {
+            width: "100%",
+            height: "40px",
+            top: 0,
+            left: 0,
+            position: "fixed",
+            background: "white"
+        }
+
+        for (let option in options) {
+            debug.style.setProperty(option, options[option]);
+        }
+
+        document.body.appendChild(debug);
+    </script>
+</body>
+
+</html>
