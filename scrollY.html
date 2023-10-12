@@ -109,11 +109,22 @@
 
             if (window.scrollY >= slide.offsetTop) {
                 //Mapping um einen Wert zwischen 0 und 1 zu bekommen
-                let opacity = 1 / window.scrollY * 100;
-                console.log({ opacity });
+                //let opacity = 1 / window.scrollY * 100;
 
-                slide.style.setProperty("opacity", opacity.toFixed(1));
-                slide.style.transform = `translateY(${Math.floor(window.scrollY / 2)}px)`;
+                let opacity = window.scrollY.map(
+                    0,
+                    //index + 1: Anzahl der verbleibenden Sides?
+                    document.body.offsetHeight - (sections.length - index - 1) * slide.offsetHeight,
+                    1,
+                    0
+                );
+
+                //letzten Slide ignorieren
+                if (index < sections.length - 2) {
+                    slide.style.setProperty("opacity", opacity);
+                    //slide.style.transform = `translateY(${Math.floor(window.scrollY / 2)}px)`;
+                }
+
             }
 
         });
@@ -135,6 +146,20 @@
         }
 
         document.body.appendChild(debug);
+
+        //siehe: https://gist.github.com/xposedbones/75ebaef3c10060a3ee3b246166caab56
+        Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+            let output = (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
+            output = output.toFixed(1);
+            console.log({
+                in_min,
+                in_max,
+                output
+            });
+
+            return output;
+        }
     </script>
 </body>
 
