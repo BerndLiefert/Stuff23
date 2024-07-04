@@ -1,0 +1,16 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-fixed-header {
+	border: 1px dotted #f00;
+	height: 80px;
+	position: relative;
+	width: 100%;
+}
+
+.sticky {
+	position: sticky!important;
+}

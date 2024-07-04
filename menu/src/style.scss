@@ -1,0 +1,23 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-fixed-header {
+	background-color: #21759b;
+	color: #fff;
+	padding: 2px;
+	height: 60px;
+	width: 100%;
+	transition: all 1s ease-in-out;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+
