@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Page</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            font-size: 16px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: lightcoral;
+            font-size: clamp(3rem, 10vw, 6rem);
+            /*
+              1200px:120px(vw) -> 96px(6rem)
+              1000px:100px(vw) -> 6rem
+               900px:90px(vw) -> 90px
+               400px:40px(vw) -> 48px(3rem)
+            */
+        }
+
+        #size {
+            color: black;
+            background-color: orange;
+            padding: 4px 10px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Lorem ipsum!</h1>
+        <p>
+            1200px:120px(vw) -> 96px(6rem)<br>
+            1000px:100px(vw) -> 6rem<br>
+            900px:90px(vw) -> 90px<br>
+            400px:40px(vw) -> 48px(3rem)
+        </p>
+        <span id="size">font-size: 96px</span>
+    </main>
+    <script>
+        window.onresize = () => {
+            const h1 = document.querySelector("h1");
+            const styles = getComputedStyle(h1);
+
+            const size = document.querySelector("#size").innerHTML = `font-size: ${styles.fontSize}`;
+        }
+    </script>
+</body>
+
+</html>
